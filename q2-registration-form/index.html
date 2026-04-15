@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <!-- Linking external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main container for centering the form -->
+    <div class="container">
+
+        <!-- Form heading -->
+        <h1>Registration Form</h1>
+        <p class="subtitle">Fill in the details carefully</p>
+
+        <!-- Form starts here -->
+        <form id="registrationForm">
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="Enter first name">
+                <small class="error" id="firstNameError"></small>
+            </div>
+
+            <!-- Middle Name -->
+            <div class="form-group">
+                <label for="middleName">Middle Name</label>
+                <input type="text" id="middleName" placeholder="Enter middle name">
+                <small class="error" id="middleNameError"></small>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Enter last name">
+                <small class="error" id="lastNameError"></small>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" placeholder="Enter email">
+                <small class="error" id="emailError"></small>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Enter Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+                <small class="error" id="passwordError"></small>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm password">
+                <small class="error" id="confirmPasswordError"></small>
+            </div>
+
+            <!-- Gender using radio buttons -->
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="Male"> Male</label>
+                    <label><input type="radio" name="gender" value="Female"> Female</label>
+                    <label><input type="radio" name="gender" value="Other"> Other</label>
+                </div>
+                <small class="error" id="genderError"></small>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label for="dob">DOB</label>
+                <input type="date" id="dob">
+                <small class="error" id="dobError"></small>
+            </div>
+
+            <!-- PAN Number -->
+            <div class="form-group">
+                <label for="pan">PAN Number</label>
+                <input type="text" id="pan" placeholder="Example: ABCDE1234F">
+                <small class="error" id="panError"></small>
+            </div>
+
+            <!-- Indian Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number (Indian)</label>
+                <input type="text" id="phone" placeholder="Enter 10-digit mobile number">
+                <small class="error" id="phoneError"></small>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" rows="4" placeholder="Enter address"></textarea>
+                <small class="error" id="addressError"></small>
+            </div>
+
+            <!-- Submit button -->
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+
+            <!-- Success message -->
+            <p id="successMessage"></p>
+
+        </form>
+    </div>
+
+    <!-- Linking external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

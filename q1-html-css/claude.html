@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Registration Portal</title>
+
+  <!-- ============================================================
+    CSS SECTION — Covers: External-style CSS, Variables, Selectors,
+    Box Model, Flexbox, Grid, Typography, Hover, Media Query,
+    Pseudo-classes, Transitions, Shadows
+  ============================================================ -->
+  <style>
+    /* ── CSS VARIABLES ── */
+    :root {
+      --primary:    #1a1a2e;
+      --accent:     #e94560;
+      --accent2:    #0f3460;
+      --card-bg:    #16213e;
+      --input-bg:   #0f3460;
+      --text:       #eaeaea;
+      --muted:      #8892a4;
+      --border:     #2a3a5c;
+      --success:    #2ecc71;
+      --error:      #e74c3c;
+      --radius:     10px;
+      --shadow:     0 8px 32px rgba(0,0,0,0.4);
+      --font-head:  'Georgia', serif;
+      --font-body:  'Courier New', monospace;
+    }
+
+    /* ── RESET & BASE ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--primary);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(233,69,96,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(15,52,96,0.3) 0%, transparent 60%);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER / H1-H6 TYPOGRAPHY ── */
+    h1 { font-size: 2.4rem; color: var(--accent); font-family: var(--font-head); letter-spacing: 2px; }
+    h2 { font-size: 1.6rem; color: #fff; font-family: var(--font-head); margin-bottom: 6px; }
+    h3 { font-size: 1.2rem; color: var(--accent2); border-left: 4px solid var(--accent); padding-left: 10px; }
+    h4 { font-size: 1rem;   color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    h5 { font-size: 0.9rem; color: var(--accent); }
+    h6 { font-size: 0.8rem; color: var(--muted);  font-style: italic; }
+
+    /* ── LAYOUT: WRAPPER ── */
+    .wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── CARD / DIV STRUCTURE ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    /* ── FLEXBOX HEADER ── */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 24px 30px;
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--accent);
+      border-radius: var(--radius) var(--radius) 0 0;
+      margin-bottom: 30px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-area img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+    }
+
+    /* ── NAVIGATION LINKS ── */
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav a:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    /* ── TABLE STYLING ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.88rem;
+    }
+    thead {
+      background: var(--accent2);
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      color: #fff;
+      font-family: var(--font-head);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+    tr:hover td           { background: rgba(233,69,96,0.08); }
+
+    /* ── LIST STYLING ── */
+    ul.styled-list, ol.styled-list {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+    ul.styled-list li {
+      list-style: none;
+      padding: 5px 0;
+      color: var(--text);
+    }
+    ul.styled-list li::before {
+      content: "▸ ";
+      color: var(--accent);
+    }
+    ol.styled-list li {
+      color: var(--text);
+      padding: 4px 0;
+    }
+    dl dt { font-weight: bold; color: var(--accent); margin-top: 8px; }
+    dl dd { margin-left: 20px; color: var(--muted); font-size: 0.9rem; }
+
+    /* ── FORM INPUTS ── */
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(233,69,96,0.2);
+    }
+    /* HTML5 VALIDATION STATES */
+    input:valid   { border-color: var(--success); }
+    input:invalid { border-color: var(--error); }
+    input:required + .req-star { color: var(--accent); }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ── SPAN ELEMENT ── */
+    span.highlight  { color: var(--accent);  font-weight: bold; }
+    span.badge      { background: var(--accent2); color: #fff; font-size: 0.75rem;
+                      padding: 2px 8px; border-radius: 12px; margin-left: 6px; }
+    span.muted      { color: var(--muted); font-size: 0.85rem; }
+    span.tag        { background: rgba(233,69,96,0.15); color: var(--accent);
+                      padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin: 2px; display: inline-block; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #c73652; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233,69,96,0.4); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+    .btn-ghost  {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover  { border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── RADIO & CHECKBOX ── */
+    .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 6px;
+    }
+    .check-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── ERROR / VALIDATION MESSAGE ── */
+    .err-msg {
+      color: var(--error);
+      font-size: 0.78rem;
+      margin-top: 4px;
+      display: none;
+    }
+    input:invalid ~ .err-msg { display: block; }
+
+    /* ── PROGRESS & RANGE ── */
+    progress { width: 100%; height: 8px; border-radius: 4px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+    /* ── IMAGE SECTION ── */
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .img-grid figure {
+      text-align: center;
+    }
+    .img-grid img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s;
+    }
+    .img-grid img:hover { transform: scale(1.05); }
+    .img-grid figcaption {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      margin-top: 10px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── MEDIA QUERY ── */
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .img-grid  { grid-template-columns: 1fr 1fr; }
+      .site-header { flex-direction: column; text-align: center; }
+      nav a { margin-left: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- ============================================================
+    SECTION: HTML HEADER TAGS (h1 - h6) + LINKS + IMAGE IN HEADER
+  ============================================================ -->
+  <header class="site-header">
+    <!-- HTML IMAGE with attributes: src, alt, width, title -->
+    <div class="logo-area">
+      <img
+        src="https://ui-avatars.com/api/?name=VIT&background=e94560&color=fff&size=56"
+        alt="VIT University Logo"
+        width="56"
+        height="56"
+        title="VIT Vellore"
+        id="logo-img"
+        class="logo"
+      />
+      <div>
+        <h1>Student Portal</h1>
+        <h6>VIT Vellore · SCOPE Department</h6>
+      </div>
+    </div>
+
+    <!-- HTML LINKS with attributes: href, target, rel -->
+    <nav>
+      <a href="#" class="active" title="Home Page">Home</a>
+      <a href="https://vit.ac.in" target="_blank" rel="noopener noreferrer">VIT Site</a>
+      <a href="mailto:admin@vit.ac.in">Contact</a>
+      <a href="#register-form">Register</a>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+    SECTION: HTML HEADER TAGS h2 - h5 showcase
+  ============================================================ -->
+  <div class="card">
+    <span class="section-label">HTML Header Tags</span>
+    <h2>Course Registration System <span class="badge">2025</span></h2>
+    <h3>Computer Science &amp; Engineering</h3>
+    <h4>Semester 2 · M.Tech Program</h4>
+    <h5>Cybersecurity &amp; Machine Learning Track</h5>
+    <h6>* All fields marked with <span class="highlight">*</span> are mandatory</h6>
+  </div>
+
+  <!-- ============================================================
+    SECTION: HTML LISTS (ul, ol, dl)
+  ============================================================ -->
+  <div class="card">
+    <span class="section-label">HTML Lists</span>
+    <div class="form-row">
+      <!-- UNORDERED LIST -->
+      <div>
+        <h4>Unordered List — Subjects</h4>
+        <ul class="styled-list" id="subject-list">
+          <li>Fullstack Development</li>
+          <li>DevOps &amp; Cloud</li>
+          <li>Computer Networks</li>
+          <li>Cybersecurity</li>
+          <li>Machine Learning</li>
+        </ul>
+      </div>
+
+      <!-- ORDERED LIST -->
+      <div>
+        <h4>Ordered List — Exam Steps</h4>
+        <ol class="styled-list">
+          <li>Login to portal</li>
+          <li>Select subjects</li>
+          <li>Fill registration form</li>
+          <li>Upload documents</li>
+          <li>Submit &amp; confirm</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- DEFINITION LIST -->
+    <br/>
+    <h4>Definition List — Terms</h4>
+    <dl>
+      <dt>SGPA</dt>
+      <dd>Semester Grade Point Average — calculated from all enrolled courses</dd>
+      <dt>CGPA</dt>
+      <dd>Cumulative Grade Point Average — across all semesters</dd>
+      <dt>Credit</dt>
+      <dd>Unit of academic weight assigned to each subject</dd>
+    </dl>
+  </div>
+
+  <!-- ============================================================
+    SECTION: HTML TABLE
+  ============================================================ -->
+  <div class="card">
+    <span class="section-label">HTML Table</span>
+    <h3>Subject Schedule</h3>
+    <table id="schedule-table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Subject</th>
+          <th>Credits</th>
+          <th>Faculty</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag">CSE501</span></td>
+          <td>Fullstack Development</td>
+          <td>4</td>
+          <td>Dr. Mohankumar B.</td>
+          <td><span class="highlight">Enrolled</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag">CSE502</span></td>
+          <td>DevOps &amp; Cloud</td>
+          <td>3</td>
+          <td>Dr. Mehfooza M.</td>
+          <td><span class="highlight">Enrolled</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag">CSE503</span></td>
+          <td>Computer Networks</td>
+          <td>3</td>
+          <td>Prof. Ramesh K.</td>
+          <td><span class="muted">Pending</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag">CSE504</span></td>
+          <td>Cybersecurity</td>
+          <td>4</td>
+          <td>Dr. Priya S.</td>
+          <td><span class="muted">Pending</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"><strong>Total Credits</strong></td>
+          <td><strong>14</strong></td>
+          <td colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- ============================================================
+    SECTION: HTML IMAGES (various attributes)
+  ============================================================ -->
+  <div class="card">
+    <span class="section-label">HTML Images</span>
+    <h3>Campus Gallery</h3>
+    <div class="img-grid">
+      <!-- img with src, alt, width, height, title, id, class -->
+      <figure>
+        <img
+          src="https://picsum.photos/seed/campus/200/90"
+          alt="VIT Campus Main Gate"
+          width="200"
+          height="90"
+          title="VIT Main Gate"
+          id="campus-img"
+          class="gallery-img"
+          loading="lazy"
+        />
+        <figcaption>Main Gate</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="https://picsum.photos/seed/library/200/90"
+          alt="VIT Library Building"
+          width="200"
+          height="90"
+          title="Central Library"
+          class="gallery-img"
+          loading="lazy"
+        />
+        <figcaption>Library</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="https://picsum.photos/seed/lab/200/90"
+          alt="Computer Lab"
+          width="200"
+          height="90"
+          title="SCOPE Lab"
+          class="gallery-img"
+          loading="lazy"
+        />
+        <figcaption>SCOPE Lab</figcaption>
+      </figure>
+    </div>
+    <!-- Image as a link -->
+    <p style="margin-top:12px; font-size:0.85rem; color:var(--muted)">
+      Click logo to visit:
+      <a href="https://vit.ac.in" target="_blank">
+        <img
+          src="https://ui-avatars.com/api/?name=VIT&background=0f3460&color=e94560&size=30"
+          alt="VIT Link Logo"
+          width="30"
+          height="30"
+          style="vertical-align:middle; border-radius:4px; margin-left:6px;"
+        />
+      </a>
+    </p>
+  </div>
+
+  <!-- ============================================================
+    SECTION: DIV STRUCTURE + SPAN ELEMENT
+  ============================================================ -->
+  <div class="card" id="div-demo">
+    <span class="section-label">div &amp; span Elements</span>
+    <h3>Profile Summary</h3>
+
+    <!-- Nested DIV structure -->
+    <div class="profile-outer" style="border:1px solid var(--border); border-radius:8px; padding:16px;">
+      <div class="profile-inner" style="display:flex; gap:16px; align-items:center;">
+        <div class="avatar" style="width:60px; height:60px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.6rem;">
+          🎓
+        </div>
+        <div class="profile-text">
+          <!-- SPAN used inline to style parts of text -->
+          <p>Name: <span class="highlight">Ayan Chaudhuri</span></p>
+          <p>Program: <span class="badge">M.Tech CSE</span> <span class="tag">Cybersecurity</span></p>
+          <p>Status: <span style="color:var(--success); font-weight:bold;">● Active</span></p>
+          <p style="font-size:0.85rem; margin-top:4px;">
+            <span class="muted">Reg No:</span>
+            <span class="highlight">24MCA0001</span>
+            <span class="muted"> · Semester:</span>
+            <span class="highlight">2</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+    SECTION: HTML FORM — INPUT VALIDATION, BUTTONS, FIELDS
+  ============================================================ -->
+  <div class="card" id="register-form">
+    <span class="section-label">HTML Form + Input Validation</span>
+    <h2>Course Registration Form</h2>
+    <h6>Fill all required fields before submitting</h6>
+    <br/>
+
+    <form
+      id="regForm"
+      action="#"
+      method="POST"
+      enctype="multipart/form-data"
+      novalidate
+      onsubmit="handleSubmit(event)"
+    >
+
+      <!-- ── TEXT INPUTS ── -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">First Name *</label>
+          <input
+            type="text"
+            id="fname"
+            name="first_name"
+            placeholder="Enter first name"
+            required
+            minlength="2"
+            maxlength="30"
+            pattern="[A-Za-z ]+"
+            autocomplete="given-name"
+          />
+          <span class="err-msg">Only letters, min 2 characters</span>
+        </div>
+
+        <div class="form-group">
+          <label for="lname">Last Name *</label>
+          <input
+            type="text"
+            id="lname"
+            name="last_name"
+            placeholder="Enter last name"
+            required
+            minlength="2"
+            maxlength="30"
+            pattern="[A-Za-z ]+"
+            autocomplete="family-name"
+          />
+          <span class="err-msg">Only letters, min 2 characters</span>
+        </div>
+      </div>
+
+      <!-- ── EMAIL ── -->
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="student@vit.ac.in"
+          required
+          autocomplete="email"
+        />
+        <span class="err-msg">Enter a valid email address</span>
+      </div>
+
+      <!-- ── PASSWORD ── -->
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Min 8 characters"
+          required
+          minlength="8"
+          maxlength="32"
+        />
+        <span class="err-msg">Password must be at least 8 characters</span>
+      </div>
+
+      <!-- ── NUMBER + DATE ── -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="regnum">Registration Number *</label>
+          <input
+            type="number"
+            id="regnum"
+            name="reg_number"
+            placeholder="e.g. 24MCA0001"
+            required
+            min="10000000"
+            max="99999999"
+          />
+          <span class="err-msg">Enter valid 8-digit reg number</span>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth *</label>
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            required
+            max="2005-01-01"
+          />
+          <span class="err-msg">Must be born before 2005</span>
+        </div>
+      </div>
+
+      <!-- ── TEL + URL ── -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="+91 9876543210"
+            pattern="[+]?[0-9]{10,13}"
+          />
+          <span class="err-msg">Enter valid phone number</span>
+        </div>
+
+        <div class="form-group">
+          <label for="website">LinkedIn / Portfolio URL</label>
+          <input
+            type="url"
+            id="website"
+            name="website"
+            placeholder="https://linkedin.com/in/..."
+          />
+          <span class="err-msg">Enter a valid URL (include https://)</span>
+        </div>
+      </div>
+
+      <!-- ── SELECT DROPDOWN ── -->
+      <div class="form-group">
+        <label for="dept">Department *</label>
+        <select id="dept" name="department" required>
+          <option value="" disabled selected>-- Select Department --</option>
+          <optgroup label="Engineering">
+            <option value="scope">SCOPE (CSE)</option>
+            <option value="sense">SENSE (ECE)</option>
+            <option value="smec">SMEC (Mechanical)</option>
+          </optgroup>
+          <optgroup label="Management">
+            <option value="vsb">VSB (Business)</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <!-- ── RADIO BUTTONS ── -->
+      <div class="form-group">
+        <label>Program Type *</label>
+        <div class="check-group">
+          <label>
+            <input type="radio" name="program" value="mtech" required /> M.Tech
+          </label>
+          <label>
+            <input type="radio" name="program" value="phd" /> Ph.D
+          </label>
+          <label>
+            <input type="radio" name="program" value="msc" /> M.Sc
+          </label>
+          <label>
+            <input type="radio" name="program" value="mca" /> MCA
+          </label>
+        </div>
+      </div>
+
+      <!-- ── CHECKBOXES ── -->
+      <div class="form-group">
+        <label>Subjects to Enroll (select all that apply)</label>
+        <div class="check-group">
+          <label><input type="checkbox" name="subjects" value="fullstack" /> Fullstack Dev</label>
+          <label><input type="checkbox" name="subjects" value="devops"    /> DevOps</label>
+          <label><input type="checkbox" name="subjects" value="networks"  /> Networks</label>
+          <label><input type="checkbox" name="subjects" value="cyber"     checked /> Cybersecurity</label>
+          <label><input type="checkbox" name="subjects" value="ml"        /> Machine Learning</label>
+        </div>
+      </div>
+
+      <!-- ── RANGE SLIDER ── -->
+      <div class="form-group">
+        <label for="credits">Credits to Register: <span id="creditVal">14</span></label>
+        <input
+          type="range"
+          id="credits"
+          name="credits"
+          min="8"
+          max="24"
+          value="14"
+          step="1"
+          oninput="document.getElementById('creditVal').textContent = this.value"
+        />
+      </div>
+
+      <!-- ── PROGRESS BAR ── -->
+      <div class="form-group">
+        <label>Profile Completion</label>
+        <progress value="70" max="100" title="70% complete"></progress>
+        <span class="muted">70% complete</span>
+      </div>
+
+      <!-- ── TEXTAREA ── -->
+      <div class="form-group">
+        <label for="bio">Short Bio / Research Interest</label>
+        <textarea
+          id="bio"
+          name="bio"
+          rows="4"
+          maxlength="500"
+          placeholder="e.g. Researching phishing URL detection using Random Forest and adversarial ML..."
+        ></textarea>
+      </div>
+
+      <!-- ── FILE UPLOAD ── -->
+      <div class="form-group">
+        <label for="doc">Upload Documents (PDF)</label>
+        <input
+          type="file"
+          id="doc"
+          name="documents"
+          accept=".pdf,.jpg,.png"
+          multiple
+          style="color: var(--muted); padding: 6px 0; border:none; background:none;"
+        />
+      </div>
+
+      <!-- ── HIDDEN FIELD ── -->
+      <input type="hidden" name="semester" value="2" />
+      <input type="hidden" name="year"     value="2025" />
+
+      <!-- ── BUTTONS ── -->
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+        <button type="submit"  class="btn btn-primary">✔ Submit Registration</button>
+        <button type="reset"   class="btn btn-outline">↺ Reset Form</button>
+        <button type="button"  class="btn btn-ghost" onclick="saveDraft()">💾 Save Draft</button>
+        <button type="button"  class="btn btn-ghost" disabled>Locked Button</button>
+      </div>
+
+      <!-- ── FORM RESULT MESSAGE ── -->
+      <div id="form-msg" style="margin-top:16px; display:none; padding:12px 16px; border-radius:8px;"></div>
+
+    </form>
+  </div>
+
+  <!-- ============================================================
+    SECTION: HTML LINKS showcase
+  ============================================================ -->
+  <div class="card">
+    <span class="section-label">HTML Links</span>
+    <h3>Useful Resources</h3>
+    <p style="margin: 10px 0;">
+      <!-- href, target, rel, title, download attributes -->
+      <a href="https://developer.mozilla.org" target="_blank" rel="noopener" title="MDN Web Docs" class="btn btn-outline" style="font-size:0.85rem;">MDN Docs ↗</a>
+      &nbsp;
+      <a href="https://github.com" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.85rem;">GitHub ↗</a>
+      &nbsp;
+      <a href="#register-form" title="Scroll to form">Back to Form ↑</a>
+      &nbsp;
+      <a href="mailto:support@vit.ac.in">Email Support</a>
+      &nbsp;
+      <a href="tel:+914162202020">Call Helpdesk</a>
+      &nbsp;
+      <!-- Download link -->
+      <a href="#" download="prospectus.pdf">Download Prospectus</a>
+    </p>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- ============================================================
+  FOOTER
+============================================================ -->
+<footer>
+  <p>
+    &copy; 2025 <span class="highlight">VIT Vellore</span> · SCOPE Department ·
+    Built with <span style="color:var(--accent);">HTML &amp; CSS</span> ·
+    <a href="#">Privacy Policy</a> · <a href="#">Terms</a>
+  </p>
+</footer>
+
+<!-- ============================================================
+  JAVASCRIPT — Form Validation + Interactivity
+============================================================ -->
+<script>
+  // Form submit handler with JS validation
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('regForm');
+    const msg  = document.getElementById('form-msg');
+
+    // Check HTML5 validity
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      msg.style.display = 'block';
+      msg.style.background = 'rgba(231,76,60,0.15)';
+      msg.style.border = '1px solid #e74c3c';
+      msg.style.color  = '#e74c3c';
+      msg.textContent  = '❌ Please fix validation errors before submitting.';
+      return;
+    }
+
+    // Check at least one subject selected
+    const checked = document.querySelectorAll('input[name="subjects"]:checked');
+    if (checked.length === 0) {
+      msg.style.display = 'block';
+      msg.style.background = 'rgba(231,76,60,0.15)';
+      msg.style.border = '1px solid #e74c3c';
+      msg.style.color  = '#e74c3c';
+      msg.textContent  = '❌ Please select at least one subject.';
+      return;
+    }
+
+    // Success
+    msg.style.display = 'block';
+    msg.style.background = 'rgba(46,204,113,0.15)';
+    msg.style.border = '1px solid #2ecc71';
+    msg.style.color  = '#2ecc71';
+    const name = document.getElementById('fname').value;
+    msg.textContent = `✅ Registration successful! Welcome, ${name}. Check your email for confirmation.`;
+  }
+
+  // Save draft (localStorage demo)
+  function saveDraft() {
+    const name = document.getElementById('fname').value;
+    alert(`Draft saved for: "${name || 'unnamed'}"`);
+  }
+</script>
+
+</body>
+</html>
